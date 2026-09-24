@@ -8,7 +8,6 @@ To run this application:
 npm install
 npm run dev
 ```
-
 # Building For Production
 
 To build this application for production:
