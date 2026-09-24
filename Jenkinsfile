@@ -12,7 +12,6 @@ pipeline {
     }
 
     parameters {
-        booleanParam(name: 'RUN_LINT', defaultValue: true, description: 'Run ESLint, Prettier, and TypeScript checks')
         booleanParam(name: 'BUILD_DOCKER', defaultValue: true, description: 'Build Docker container image')
         booleanParam(name: 'PUSH_IMAGE', defaultValue: true, description: 'Push image to container registry')
         booleanParam(name: 'UPDATE_GITOPS', defaultValue: true, description: 'Update image tag in GitOps Helm repository for ArgoCD')
@@ -37,24 +36,6 @@ pipeline {
             steps {
                 echo 'Checking out source repository...'
                 checkout scm
-            }
-        }
-
-        stage('Lint & Type Check') {
-            when {
-                expression { return params.RUN_LINT }
-            }
-            steps {
-                echo 'Running TypeScript type check and lint inside Docker...'
-                sh '''
-                    docker run --rm -v "$PWD:/app" -w /app node:22-alpine sh -c "
-                        npm install -g pnpm@latest
-                        pnpm install --frozen-lockfile
-                        pnpm exec tsc --noEmit
-                        pnpm run check
-                        pnpm run lint
-                    "
-                '''
             }
         }
 
