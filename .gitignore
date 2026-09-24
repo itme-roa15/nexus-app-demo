@@ -1,17 +1,67 @@
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-.env
-.nitro
-.tanstack
-.wrangler
-.output
-.vinxi
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+
+# Build & Framework Outputs (TanStack Start / Nitro / Vite)
+dist/
+dist-ssr/
+.output/
+.nitro/
+.tanstack/
+.vinxi/
+.vite/
 __unconfig*
-todos.json
+.wrangler/
+*.tsbuildinfo
+
+# SQLite Database & Storage
 *.db
 *.db-journal
 *.db-wal
 *.db-shm
+todos.json
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+*.local
+*.pem
+*.key
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing & Code Coverage
+coverage/
+.nyc_output/
+
+# IDE & Editor Files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files & Caches
+.eslintcache
+.cache/
+tmp/
+temp/
