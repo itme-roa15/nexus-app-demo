@@ -53,10 +53,7 @@ pipeline {
 
         stage('Push Docker Image') {
             when {
-                allOf {
-                    branch 'main'
-                    expression { return params.PUSH_IMAGE }
-                }
+                expression { params.PUSH_IMAGE != false }
             }
             steps {
                 echo "Pushing image to container registry..."
@@ -77,10 +74,7 @@ pipeline {
 
         stage('Update GitOps Config Repo') {
             when {
-                allOf {
-                    branch 'main'
-                    expression { return params.UPDATE_GITOPS }
-                }
+                expression { params.UPDATE_GITOPS != false }
             }
             steps {
                 echo "Updating image tag to ${env.IMAGE_TAG} in GitOps repo (${env.GITOPS_REPO_URL})..."
