@@ -40,40 +40,21 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                echo 'Ensuring pnpm and installing project dependencies...'
-                sh '''
-                    if ! command -v pnpm &> /dev/null; then
-                        echo "pnpm not found globally, installing..."
-                        npm install -g pnpm@latest
-                    fi
-                    pnpm --version
-                    pnpm install --frozen-lockfile
-                '''
-            }
-        }
-
         stage('Lint & Type Check') {
             when {
                 expression { return params.RUN_LINT }
             }
             steps {
-                echo 'Running TypeScript type check...'
-                sh 'pnpm exec tsc --noEmit'
-
-                echo 'Checking code formatting...'
-                sh 'pnpm run check'
-
-                echo 'Running ESLint...'
-                sh 'pnpm run lint'
-            }
-        }
-
-        stage('Build Application') {
-            steps {
-                echo 'Building application with TanStack Start / Nitro / Vite...'
-                sh 'pnpm run build'
+                echo 'Running TypeScript type check and lint inside Docker...'
+                sh '''
+                    docker run --rm -v "$PWD:/app" -w /app node:22-alpine sh -c "
+                        npm install -g pnpm@latest
+                        pnpm install --frozen-lockfile
+                        pnpm exec tsc --noEmit
+                        pnpm run check
+                        pnpm run lint
+                    "
+                '''
             }
         }
 
