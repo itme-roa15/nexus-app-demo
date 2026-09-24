@@ -21,7 +21,7 @@ pipeline {
 
     environment {
         APP_NAME          = 'nexus-store'
-        DOCKER_IMAGE_NAME = 'nexus-store'
+        DOCKER_IMAGE_NAME = 'roa15/nexus-store'
         IMAGE_TAG         = "${env.BUILD_NUMBER}-${env.GIT_COMMIT ? env.GIT_COMMIT.take(7) : 'dev'}"
         DOCKER_CREDS_ID   = 'docker-registry-credentials'
         
